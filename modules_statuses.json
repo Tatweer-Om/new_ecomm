@@ -1,0 +1,19 @@
+{
+    "User": true,
+    "Color": true,
+    "Branch": true,
+    "Setting": true,
+    "Size": true,
+    "Customer": true,
+    "Laundry": true,
+    "ExpenseCategory": true,
+    "Expense": true,
+    "Accessory": true,
+    "DressCategory": true,
+    "Dress": true,
+    "Booking": true,
+    "DressLaundry": true,
+    "History": true,
+    "Dashboard": true,
+    "Report": true
+}

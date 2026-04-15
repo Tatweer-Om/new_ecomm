@@ -1,0 +1,491 @@
+    :root{
+      --primary-color:#D63384;
+      --background-color:#FFF9FB;
+      --muted:#6c757d;
+      --sidebar-w-md: 5rem;
+      --sidebar-w-xl: 16rem;
+    }
+    body{ 
+      font-family:"Cairo",sans-serif; 
+      background:var(--background-color); 
+      color:#495057; 
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .sidebar{ 
+      width:18rem; 
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      right: 0;
+    }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    @media (min-width:768px) and (max-width:1279px){
+      .sidebar{ 
+        width: var(--sidebar-w-md); 
+        transform: translateX(0);
+      }
+      .sidebar:hover{ width:16rem; }
+      .sidebar .label{ opacity:0; width:0; transition:all .2s; }
+      .sidebar:hover .label{ opacity:1; width:auto; }
+      .sidebar .submenu{ display:none; }
+      .sidebar:hover .submenu{ display:block; }
+    }
+    @media (min-width:1280px){
+      .sidebar{ 
+        width: var(--sidebar-w-xl); 
+        transform: translateX(0);
+      }
+    }
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    @media (max-width: 767px) {
+      .main-container {
+        display: block;
+      }
+    }
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .sticky-below-header{ top: var(--header-h, 64px); }
+    @media (max-width:767px){ .page-main{ padding-bottom: calc(4.9rem + env(safe-area-inset-bottom)); } }
+    .shadow-custom{ box-shadow: 0 4px 14px rgba(214,51,132,.08); }
+    .material-symbols-outlined{ font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24 }
+    .page-main > *:first-child{ margin-top: 0 !important; }
+ .mobile-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: white;
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+}
+    @media (min-width: 768px) {
+      .mobile-nav {
+        display: none;
+          position: fixed;
+      }
+    }
+    .mobile-nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.75rem;
+      color: #6b7280;
+      padding: 4px 8px;
+    }
+    .mobile-nav a.active {
+      color: #d63384;
+    }
+    .mobile-nav .icon {
+      font-size: 1.25rem;
+      margin-bottom: 2px;
+    }
+    .main-content {
+      flex: 1;
+      margin-bottom: 0;
+    }
+    @media (max-width: 767px) {
+      .main-content {
+        margin-bottom: 4rem;
+        
+      }
+    }
+
+    /* تحسينات للشريط الجانبي */
+    .sidebar-inner {
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    @media (min-width: 768px) {
+      .sidebar-inner {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+      }
+    }
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+  @media (max-width: 768px) {
+    footer {
+      margin-bottom: 65px; /* أو حسب ارتفاع .mobile-nav */
+    }
+  }
+
+
+  /* pagiantion css */
+ .dress_pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.dress_pagination li {
+    display: inline-flex;
+}
+
+/* Links (inactive) */
+.dress_pagination li a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 500;
+    background-color: rgba(252, 231, 243, 0.6);
+    color: #d63384;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.dress_pagination li a:hover {
+    background-color: #d63384;
+    color: white;
+}
+
+/* Active page */
+.dress_pagination li.active span {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #d63384;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Disabled buttons */
+.dress_pagination li.disabled span {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    color: #b5b5b5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* preloader z-index */
+.preloader
+{
+  z-index: 1000!important;
+}
+
+div:where(.swal2-container) div:where(.swal2-actions)
+{
+  gap:10px!important;
+}
+   
+/* booking page css */
+.form-select,
+.form-input,
+.form-textarea {
+    background-color: transparent;
+    border-color: #f3e7ed;
+}
+.dark .form-select,
+.dark .form-input,
+.dark .form-textarea {
+    border-color: #3c2131;
+    color: #f8f6f7;
+}
+.dark .form-select:focus,
+.dark .form-input:focus,
+.dark .form-textarea:focus {
+    --tw-ring-color: #f7a1cc;
+    border-color: #f7a1cc;
+}
+.form-select:focus,
+.form-input:focus,
+.form-textarea:focus {
+    --tw-ring-color: #f7a1cc;
+    border-color: #f7a1cc;
+}
+.calendar-day.unavailable {
+    color: #9a4c73;
+    text-decoration: line-through;
+}
+.calendar-day.selected {
+    background-color: #f7a1cc;
+    color: white;
+}
+.timeline-bar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 6px;
+  background-color: rgb(254 202 202); /* أحمر فاتح */
+  z-index: 0;
+  width: 100%;
+}
+.timeline-marker {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+
+/* new */
+.d-none
+{
+  display: none;
+}
+
+
+
+/* payment modal desing */
+/* البطاقة */
+.payment-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(247, 161, 204, 0.25);
+  box-shadow: 0 8px 32px rgba(247, 161, 204, 0.15);
+  border-radius: 1.25rem;
+}
+
+/* طرق الدفع */
+.payment-radio + label {
+  position: relative;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+.payment-radio + label:hover {
+  background-color: #fff6fa;
+  border-color: #f7a1cc80;
+  box-shadow: 0 0 8px rgba(247,161,204,0.25);
+}
+.payment-radio:checked + label {
+  background: linear-gradient(to bottom right, #fce4f3, #f7a1cc20);
+  border-color: #f7a1cc;
+  box-shadow: 0 0 15px rgba(247,161,204,0.35);
+  transform: scale(1.05);
+}
+
+/* المدخلات */
+input[type="number"] {
+  border-radius: 0.75rem;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+input[type="number"]:focus {
+  border-color: #f7a1cc;
+  box-shadow: 0 0 0 3px rgba(247,161,204,0.25);
+  outline: none;
+}
+
+/* الأزرار */
+.btn-primary {
+  background: linear-gradient(to right, #f7a1cc, #fcbad3);
+  color: white;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(247,161,204,0.25);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(247,161,204,0.35);
+}
+.btn-cancel {
+  background: #f2f2f2;
+  color: #444;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+.btn-cancel:hover {
+  background: #e7e7e7;
+  transform: translateY(-2px);
+}
+
+/* شريط التقدّم */
+.progress-wrapper {
+  background-color: #fdf2f8;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+  height: 20px;
+}
+.progress-bar {
+  background: linear-gradient(to right, #f7a1cc, #fcbad3);
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+}
+.progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4b2132;
+}
+
+
+
+/* receive css */
+/* 🔴 تنبيه الموظف (محسّن وجذاب) */
+.alert-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: linear-gradient(to right, rgba(239,68,68,0.08), rgba(247,161,204,0.10));
+  color: #b91c1c;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(239,68,68,0.10);
+}
+.alert-box span {
+  font-size: 32px;
+  color: #ef4444;
+}
+
+/* 💅 تحسين بطاقات الراديو (الدريس) */
+.radio-peer:checked ~ .radio-card {
+  border-color: var(--radio-color);
+  background-color: var(--radio-color);     /* تلوين كامل عند الاختيار */
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--radio-color) 40%, transparent);
+}
+.radio-peer:checked ~ .radio-card .radio-icon {
+  color: #fff;
+}
+.radio-card:hover {
+  background-color: color-mix(in srgb, var(--radio-color, #f7a1cc) 8%, transparent);
+  border-color: var(--radio-color, #f7a1cc);
+}
+
+/* ✅ شكل Checkbox تم الإرجاع (الملحق) */
+.accessory-checkbox {
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--subtle-dark, #4a2a3b);
+  border-radius: 6px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background-color: rgba(255,255,255,0.9);
+}
+.accessory-checkbox:hover {
+  border-color: var(--primary, #f7a1cc);
+}
+.accessory-checkbox:checked {
+  background-color: #22c55e;
+  border-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34,197,94,0.35);
+}
+.accessory-checkbox:checked::after {
+  content: "✓";
+  position: absolute;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+}
+
+/* ✅ زر/ليبل "تم الإرجاع" (النمط البديل الموجود عندك) */
+.return-toggle{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 12px;border-radius:10px;
+  background: rgba(230,219,224,0.5);
+  border:1px solid rgba(74,42,59,0.3);
+  font-weight:600;font-size:14px;
+  transition:all .25s ease; cursor:pointer;
+}
+.return-toggle:hover{ background:rgba(247,161,204,0.18); border-color:#f7a1cc; color:#b11a5f; }
+.accessory-checkbox:checked + .return-toggle,
+.peer:checked + .return-toggle{
+  background:#22c55e; border-color:#22c55e; color:#fff; transform:scale(1.03); box-shadow:0 0 8px rgba(34,197,94,0.35);
+}
+
+/* 🎯 تلوين خيارات حالة الملحق عند الاختيار (سليم/تالف/فقد) */
+.accessory-details .radio-card{ transition:all .25s ease; }
+.accessory-details .radio-card:hover{
+  background:rgba(247,161,204,.08);
+  border-color:#f7a1cc;
+}
+
+/* نحدد البطاقة المطابقة للراديو المختار باستخدام نهاية الـ id (-perfect, -damaged, -lost) */
+.accessory-status-radio[value="perfect"]:checked ~ .accessory-details label[for$="-perfect"],
+.accessory-status-radio[value="damaged"]:checked ~ .accessory-details label[for$="-damaged"],
+.accessory-status-radio[value="lost"]:checked    ~ .accessory-details label[for$="-lost"]{
+  background-color: var(--radio-color);
+  border-color: var(--radio-color);
+  color:#fff;
+  transform:scale(1.03);
+  box-shadow:0 0 8px color-mix(in srgb, var(--radio-color) 40%, transparent);
+}
+.accessory-status-radio[value="perfect"]:checked ~ .accessory-details label[for$="-perfect"] .radio-icon,
+.accessory-status-radio[value="damaged"]:checked ~ .accessory-details label[for$="-damaged"] .radio-icon,
+.accessory-status-radio[value="lost"]:checked    ~ .accessory-details label[for$="-lost"] .radio-icon{
+  color:#fff;
+}
+
+/* 🧠 منطقك الأصلي للغرامات والشفافية يبقى كما هو */
+.accessory-checkbox:checked~.accessory-status-section { display: none; }
+.accessory-status-radio[value="damaged"]:checked~.accessory-fine-section,
+.accessory-status-radio[value="lost"]:checked~.accessory-fine-section { display: block; }
+.accessory-status-radio[value="lost"]:checked~.accessory-details { opacity: 0.5; }
+.accessory-status-radio[value="lost"]:checked~.accessory-details .accessory-name { text-decoration: line-through; }
+.accessory-status-radio[value="damaged"]:checked~.accessory-details { opacity: 0.7; }
+
+ 
+ 
+/* sms */
+.sms_variable
+{
+  text-decoration: none;cursor: pointer;
+}
+
+/* dashbaord */
+
+  /* Red Pulse Animation */
+@keyframes pulseRed {
+  0% { box-shadow: 0 0 0 0 rgba(255,0,0,0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(255,0,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); }
+}
+
+.pulse-red {
+  animation: pulseRed 1.8s infinite;
+}
