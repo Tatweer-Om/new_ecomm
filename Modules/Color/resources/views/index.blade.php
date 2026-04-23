@@ -45,7 +45,7 @@
               </tr> 
               @empty
                 <tr class="hover:bg-pink-50/50 transition-colors">
-                  <td colspan="2" class="text-center px-4 sm:px-6 py-4 text-[var(--text-primary)]">{{ trans('color::messages.color_not_found_lang', [], session('locale')) }}</td>
+                  <td colspan="3" class="text-center px-4 sm:px-6 py-4 text-[var(--text-primary)]">{{ trans('color::messages.color_not_found_lang', [], session('locale')) }}</td>
                 </tr>
               @endforelse
           </tbody>
@@ -141,6 +141,7 @@
                         type="color" 
                         name="color_code" 
                         class="color_code w-16 h-10 rounded cursor-pointer border"
+                        value="#000000"
                     >
                     <span class="text-sm text-gray-500">
                         {{ trans('color::messages.color_click_square_choose_lang', [], session('locale')) }}

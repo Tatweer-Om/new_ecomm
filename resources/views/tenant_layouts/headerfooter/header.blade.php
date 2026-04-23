@@ -20,6 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  {{-- Tailwind Play CDN logs a production warning in the console; for production, compile utilities (Tailwind CLI / PostCSS / Vite) and link the built CSS instead. --}}
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -63,14 +64,14 @@
 >
   <div class="sidebar-inner w-full">
     <div class="text-2xl font-bold text-center text-[var(--primary-color)] py-4 border-b border-pink-100">
-      @php echo getColumnValue('settings','id',1,'name'); @endphp
+      {{-- @php echo getColumnValue('settings','id',1,'name'); @endphp --}}
     </div>
     
-    <nav class="sidebar-nav flex flex-col gap-3 mt-2 flex-grow px-3 py-4">
-      <a href="{{ route($apiVersion.'.dashboards.index') }}" class="flex items-center gap-4 px-5 py-3 rounded-xl bg-pink-100/60 text-[var(--primary-color)] font-semibold">
+     <nav class="sidebar-nav flex flex-col gap-3 mt-2 flex-grow px-3 py-4">
+      {{-- <a href="{{ route($apiVersion.'.dashboards.index') }}" class="flex items-center gap-4 px-5 py-3 rounded-xl bg-pink-100/60 text-[var(--primary-color)] font-semibold">
         <span class="material-symbols-outlined">dashboard</span><span class="label">{{ trans('messages.dashboard_lang', [], session('locale')) }}</span>
-      </a>
-      @if (Auth::guard('tenant')->user()->booking==1)
+      </a> --}}
+      {{-- @if (Auth::guard('tenant')->user()->booking==1)
         <div x-data="{open:false}">
           <button @click="open = !open" class="flex items-center justify-between w-full gap-4 px-5 py-3 rounded-xl hover:bg-pink-50 transition text-gray-500 hover:text-[var(--primary-color)]">
             <div class="flex items-center gap-4">
@@ -85,9 +86,9 @@
             <a href="{{ route($apiVersion.'.booking.bookingReceive') }}"  class="block px-4 py-2 text-sm rounded-lg text-gray-500 hover:bg-pink-50 hover:text-[var(--primary-color)]">{{ trans('messages.dress_receiving_lang', [], session('locale')) }}</a>
           </div>
         </div>
-      @endif
-  
-      @if (Auth::guard('tenant')->user()->dress==1)
+      @endif 
+   --}}
+      {{-- @if (Auth::guard('tenant')->user()->dress==1)
         <div x-data="{open:false}">
           <button @click="open = !open" class="flex items-center justify-between w-full gap-4 px-5 py-3 rounded-xl hover:bg-pink-50 transition text-gray-500 hover:text-[var(--primary-color)]">
             <div class="flex items-center gap-4">
@@ -103,9 +104,9 @@
             <a href="{{ route($apiVersion.'.accessories.index') }}"  class="block px-4 py-2 text-sm rounded-lg text-gray-500 hover:bg-pink-50 hover:text-[var(--primary-color)]">{{ trans('messages.accessory_lang', [], session('locale')) }}</a>
           </div>
         </div>
-      @endif  
+      @endif   --}}
 
-      @if (Auth::guard('tenant')->user()->customer==1)
+      {{-- @if (Auth::guard('tenant')->user()->customer==1)
         <a href="{{ route($apiVersion.'.customers.index') }}" class="flex items-center gap-4 px-5 py-3 rounded-xl hover:bg-pink-50 transition text-gray-500 hover:text-[var(--primary-color)]">
           <span class="material-symbols-outlined">groups</span><span class="label">{{ trans('messages.customer_lang', [], session('locale')) }}</span>
         </a>
@@ -115,9 +116,9 @@
         <a href="{{ route($apiVersion.'.laundrys.index') }}" class="flex items-center gap-4 px-5 py-3 rounded-xl hover:bg-pink-50 transition text-gray-500 hover:text-[var(--primary-color)]">
           <span class="material-symbols-outlined">styler</span><span class="label">{{ trans('messages.laundry_lang', [], session('locale')) }}</span>
         </a>
-      @endif  
+      @endif   --}}
 
-      @if (Auth::guard('tenant')->user()->expense==1)
+      {{-- @if (Auth::guard('tenant')->user()->expense==1)
         <div x-data="{open:false}">
           <button @click="open = !open" class="flex items-center justify-between w-full gap-4 px-5 py-3 rounded-xl hover:bg-pink-50 transition text-gray-500 hover:text-[var(--primary-color)]">
             <div class="flex items-center gap-4">
@@ -136,8 +137,8 @@
         <a href="{{ route($apiVersion.'.users.index') }}" class="flex items-center gap-4 px-5 py-3 rounded-xl hover:bg-pink-50 transition text-gray-500 hover:text-[var(--primary-color)]">
           <span class="material-symbols-outlined">person_outline</span><span class="label">{{ trans('messages.user_lang', [], session('locale')) }}</span>
         </a>
-      @endif 
-
+      @endif  --}}
+{{-- 
       @if (Auth::guard('tenant')->user()->report==1)
         <div x-data="{open:false}">
           <button @click="open = !open" class="flex items-center justify-between w-full gap-4 px-5 py-3 rounded-xl hover:bg-pink-50 transition text-gray-500 hover:text-[var(--primary-color)]">
@@ -153,13 +154,13 @@
             
           </div>
         </div>
-      @endif  
+      @endif   --}}
 
-      @if (Auth::guard('tenant')->user()->setting==1)
+      {{-- @if (Auth::guard('tenant')->user()->setting==1)
         <a href="{{ route($apiVersion.'.settings.index') }}" class="flex items-center gap-4 px-5 py-3 rounded-xl hover:bg-pink-50 transition text-gray-500 hover:text-[var(--primary-color)]">
           <span class="material-symbols-outlined">settings</span><span class="label">{{ trans('messages.setting_lang', [], session('locale')) }}</span>
         </a>
-      @endif  
+      @endif   --}}
     </nav>
 
     <div class="mt-auto border-t border-pink-100 pt-4">

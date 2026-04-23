@@ -1,167 +1,116 @@
 <?php
 
-namespace Modules\Color\Http\Controllers\Api\v1;
+namespace Modules\Color\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\BaseApiController;
 use Illuminate\Http\Request;
+use Modules\Color\Http\Requests\StoreColorRequest;
+use Modules\Color\Http\Requests\UpdateColorRequest;
+use Modules\Color\Http\Resources\ColorResource;
 use Modules\Color\Models\Color;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Modules\Color\Services\ColorService;
 
-
-class ColorController extends Controller
+class ColorController extends BaseApiController
 {
+    public function __construct(
+        protected ColorService $colorService
+    ) {}
+
     public function index(Request $request)
     {
-        try {
-            $colors = Color::latest()->paginate(10); // 10 items per page
+        $this->authorize('viewAny', Color::class);
 
-            // If AJAX request, just return HTML of the table (we will render it in Blade)
-            if ($request->ajax()) {
-                return view('color::index', compact('colors'))->render();
-            }
+        $colors = $this->colorService->getPaginated(
+            perPage: (int) $request->integer('per_page', 10),
+            page: (int) $request->integer('page', 1)
+        );
 
-            return view('color::index', compact('colors'));
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Internal Server Error: ' . $e->getMessage());
-        }
+        return $this->successResponse(
+            'Colors fetched successfully',
+            ColorResource::collection($colors->items()),
+            200,
+            [
+                'current_page' => $colors->currentPage(),
+                'last_page'    => $colors->lastPage(),
+                'per_page'     => $colors->perPage(),
+                'total'        => $colors->total(),
+            ]
+        );
     }
 
-
-
-    public function store(Request $request)
+    public function store(StoreColorRequest $request)
     {
-        $today=date('Y-m-d');
-        
-        try {
-            $validated = $request->validate([
-                'color_name' => 'required|string|max:255',
-                'color_name_ar' => 'required|string|max:255', 
-            ]);
-          
-            $color = Color::create([
-                'color_name' => $validated['color_name'],
-                'color_name_ar' => $validated['color_name_ar'],
-                'color_code' => $request['color_code'],
-                'user_id' => Auth::guard('tenant')->id(),
-                'added_by' => Auth::guard('tenant')->user()->name,
-                'add_date' => $today,
-            ]);
+        $user = $request->user();
+        $validated = $request->validated();
 
-            return response()->json([
-                'status' => true,
-                'message' =>  trans('color::messages.color_add_success_lang', [], session('locale')),
-                'data' => $color
-            ], 200);
-        } catch (ValidationException $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation Error',
-                'errors' => $e->errors(),
-            ], 400);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Internal Server Error',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $color = $this->colorService->create([
+            'color_name'    => $validated['color_name'],
+            'color_name_ar' => $validated['color_name_ar'],
+            'color_code'    => $validated['color_code'] ?? null,
+            'created_by'    => $user?->id,
+        ]);
+
+        return $this->successResponse(
+            trans('color::messages.color_add_success_lang', [], app()->getLocale()),
+            new ColorResource($color),
+            201
+        );
     }
 
-    public function show($id)
+    public function show(Color $color)
     {
-        try {
-            $color = Color::find($id);
-            if (!$color) {
-                return response()->json([
-                    'status' => false,
-                    'message' => trans('color::messages.color_not_found_lang', [], session('locale')),
-                ], 404);
-            }
+        $this->authorize('view', $color);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Color fetched successfully',
-                'data' => $color
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Internal Server Error',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $color = $this->colorService->findById($color->getKey());
+
+        return $this->successResponse(
+            'Color fetched successfully',
+            new ColorResource($color)
+        );
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateColorRequest $request, Color $color)
     {
-        $today=date('Y-m-d');
-        try {
-            $validated = $request->validate([
-                'color_name' => 'required|string|max:255',
-                'color_name_ar' => 'required|string|max:255', 
-            ]);
+        $validated = $request->validated();
+        $user = $request->user();
 
-            $color = Color::find($id);
-            if (!$color) {
-                return response()->json([
-                    'status' => false,
-                    'message' => trans('color::messages.color_not_found_lang', [], session('locale')),
-                ], 404);
-            }
+        $color = $this->colorService->update($color, [
+            'color_name'    => $validated['color_name'],
+            'color_name_ar' => $validated['color_name_ar'],
+            'color_code'    => $validated['color_code'] ?? null,
+            'updated_by'    => $user?->id,
+        ]);
 
-            $color->update([
-                'color_name' => $validated['color_name'],
-                'color_name_ar' => $validated['color_name_ar'],
-                'color_code' => $request['color_code'],
-                'updated_by' => Auth::guard('tenant')->user()->name,
-                'update_date' => $today,
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => trans('color::messages.color_update_success_lang', [], session('locale')),
-                'data' => $color
-            ], 200);
-        } catch (ValidationException $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation Error',
-                'errors' => $e->errors(),
-            ], 400);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Internal Server Error',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        return $this->successResponse(
+            trans('color::messages.color_update_success_lang', [], app()->getLocale()),
+            new ColorResource($color)
+        );
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, Color $color)
     {
-        try {
-            $color = Color::find($id);
-            if (!$color) {
-                return response()->json([
-                    'status' => false,
-                    'message' => trans('color::messages.color_not_found_lang', [], session('locale')),
-                ], 404);
-            }
+        $this->authorize('delete', $color);
 
-            $color->delete();
+        $user = $request->user();
 
-            return response()->json([
-                'status' => true,
-                'message' => trans('color::messages.delete_success_lang', [], session('locale')),
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Internal Server Error',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $this->colorService->softDelete($color, $user?->id);
+
+        return $this->successResponse(
+            trans('color::messages.delete_success_lang', [], app()->getLocale())
+        );
+    }
+
+    public function restore(Request $request, int|string $id)
+    {
+        $this->authorize('restore', Color::class);
+
+        $user = $request->user();
+
+        $color = $this->colorService->restore($id, $user?->id);
+
+        return $this->successResponse(
+            trans('color::messages.color_restore_success_lang', [], app()->getLocale()),
+            new ColorResource($color)
+        );
     }
 }
