@@ -17,5 +17,14 @@ return [
     'color_update_failed_lang' => 'Color Update Failed', 
     'color_add_failed_lang' => 'Color Add Failed', 
     'color_not_found_lang' => 'Color not found',
-    
+    'delete_success_lang' => 'Color deleted successfully',
+    'color_restore_success_lang' => 'Color restored successfully',
+    'color_name_required_lang' => 'Color name is required',
+    'color_name_string_lang' => 'Color name must be text',
+    'color_name_max_lang' => 'Color name is too long',
+    'color_name_ar_required_lang' => 'Arabic color name is required',
+    'color_name_ar_string_lang' => 'Arabic color name must be text',
+    'color_name_ar_max_lang' => 'Arabic color name is too long',
+    'color_code_string_lang' => 'Color code must be text',
+    'color_code_max_lang' => 'Color code is too long',
 ];

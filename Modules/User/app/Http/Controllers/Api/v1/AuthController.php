@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Modules\User\Models\User;
 use Illuminate\Support\Facades\DB;
-use Modules\Dashboard\Http\Controllers\Api\v1\DashboardController;
 
 
 
@@ -31,7 +30,7 @@ class AuthController extends Controller
             $request->session()->regenerate(); // important
 
             // Redirect to UserController@index
-            return redirect()->action([DashboardController::class, 'index']);
+            return redirect()->action([UserController::class, 'index']);
         }
 
         // Back with error

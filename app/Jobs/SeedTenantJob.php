@@ -28,7 +28,7 @@ class SeedTenantJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->tenant->run(function(){
+        $this->tenant->run(function () {
             $user = User::create([
                 'name' => $this->tenant->name,
                 'email' => $this->tenant->email,
@@ -36,15 +36,15 @@ class SeedTenantJob implements ShouldQueue
                 'branch_id' => 1,
                 'password' => $this->tenant->password,
             ]);
-            $b=0;
-            for ($i=0; $i <$this->tenant->branches ; $i++) { 
-                $b=$b+$i;
+            $b = 0;
+            for ($i = 0; $i < $this->tenant->branches; $i++) {
+                $b = $b + $i;
                 $branch = Branch::create([
-                    'branch_name' => 'Branch'.$b, 
+                    'branch_name' => 'Branch' . $b,
                 ]);
             }
             $setting = Setting::create([
-                'tenant_id' => $this->tenant->id, 
+                'tenant_id' => $this->tenant->id,
             ]);
             // $user->assignRole('admin');
         });

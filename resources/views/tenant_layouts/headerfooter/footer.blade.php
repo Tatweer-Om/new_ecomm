@@ -17,21 +17,21 @@
     <span class="text-xs">الرئيسية</span>
   </a>
 
-  <a href="{{ route($apiVersion.'.booking.index') }}" class="flex flex-col items-center text-gray-500">
+  {{-- <a href="{{ route($apiVersion.'.booking.index') }}" class="flex flex-col items-center text-gray-500">
     <span class="material-symbols-outlined text-xl">calendar_month</span>
     <span class="text-xs">{{ trans('messages.booking_lang', [], session('locale')) }}</span>
-  </a>
+  </a> --}}
 
   <!-- زر القائمة الجانبية (منتصف البار) -->
   <button @click="sidebarOpen = !sidebarOpen"
           class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-pink-500 text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center border-4 border-white z-50">
     <span class="material-symbols-outlined text-3xl">menu</span>
   </button>
-
+{{-- 
   <a href="{{ route($apiVersion.'.dresses.index') }}" class="flex flex-col items-center text-gray-500">
     <span class="material-symbols-outlined text-xl">styler</span>
     <span class="text-xs">{{ trans('messages.dress_lang', [], session('locale')) }}</span>
-  </a>
+  </a> --}}
 
   <a href="{{ route('tlogout') }}" class="flex flex-col items-center text-gray-500">
     <span class="material-symbols-outlined text-xl">logout</span>

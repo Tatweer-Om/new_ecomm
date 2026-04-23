@@ -1,3 +1,10 @@
+function colorPickerHexOrDefault(value) {
+    if (value && typeof value === 'string' && /^#[0-9A-Fa-f]{6}$/.test(value.trim())) {
+        return value.trim();
+    }
+    return '#000000';
+}
+
 $(document).ready(function() {
     
     $('.add_color').off().on('submit', function (e) {
@@ -35,9 +42,13 @@ $(document).ready(function() {
                 after_submit();
 
                 // Always show message from Laravel
-                show_notification(data.status ? 'success' : 'error', data.message);
+                var ok = data.success === true || data.status === true;
+                show_notification(ok ? 'success' : 'error', data.message);
 
-                if (!id) $(".add_color")[0].reset(); // reset only if add was successful
+                if (!id) {
+                    $(".add_color")[0].reset();
+                    $(".color_code").val(colorPickerHexOrDefault($(".color_code").val()));
+                }
                 // Refresh table after successful AJAX form submission
                 fetchdata(currentPaginationUrl); // reload the current page
                 
@@ -67,8 +78,9 @@ document.addEventListener('alpine:init', () => {
 function resetColorForm() {
     const form = document.querySelector('.add_color');
     if (form) {
-        form.reset(); // reset all normal inputs
-        $('.color_id').val(''); // clear hidden ID manually
+        form.reset();
+        $('.color_id').val('');
+        $('.color_code').val(colorPickerHexOrDefault($('.color_code').val()));
     }
 }
 
@@ -84,11 +96,11 @@ function edit(id){
         success: function(fetch) {
             hidePreloader(); 
 
-            if (fetch.status) {
+            if (fetch.success === true || fetch.status === true) {
                 const color = fetch.data;
                 $(".color_name").val(color.color_name);
                 $(".color_name_ar").val(color.color_name_ar);
-                $(".color_code").val(color.color_code);
+                $(".color_code").val(colorPickerHexOrDefault(color.color_code));
                 $(".color_id").val(color.id);
                 $(".modal-title").html(window.translations.color_update_success_lang);
 
@@ -135,7 +147,7 @@ function del(id) {
                 },
                 success: function (data) {
                     hidePreloader();
-                    if (data.status) {
+                    if (data.success === true || data.status === true) {
                         show_notification('success', data.message || window.translations.delete_success_lang);
                         fetchdata(currentPaginationUrl); // reload the page
                     } else {
